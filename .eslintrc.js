@@ -4,6 +4,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
-    '@typescript-eslint/indent': ['off']
-  }
+    '@typescript-eslint/indent': ['off'],
+    'react/jsx-one-expression-per-line': ['off'],
+  },
 };
