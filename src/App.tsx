@@ -1,6 +1,5 @@
 import React from 'react';
 import getUser from './services/fetch';
-// import './App.css';
 
 const CLIENT_ID = '450893975309-gr4ed18b4733vapf59l35e150i927vlq.apps.googleusercontent.com';
 
