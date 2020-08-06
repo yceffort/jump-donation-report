@@ -1,29 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import getUser from './services/fetch';
+// import './App.css';
+
+const CLIENT_ID = '450893975309-gr4ed18b4733vapf59l35e150i927vlq.apps.googleusercontent.com';
 
 function App() {
+  const onSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (e) {
+      e.preventDefault();
+    }
+    window.gapi.load('auth2', async () => {
+      window.gapi.auth2.init({
+        client_id: CLIENT_ID,
+      });
+      const GoogleAuth = window.gapi.auth2.getAuthInstance();
+      const options = new window.gapi.auth2.SigninOptionsBuilder();
+      options.setPrompt('select_account');
+      options.setScope('profile').setScope('email');
+
+      const response = await GoogleAuth.signIn(options);
+      const authResponse = response.getAuthResponse();
+      const token = authResponse.id_token;
+      const userResponse = await getUser(token);
+      console.log(userResponse);
+    });
+  };
+  const onSignOut = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (e) {
+      e.preventDefault();
+    }
+      const GoogleAuth = window.gapi.auth2.getAuthInstance();
+      await GoogleAuth.signOut();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.tsx</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button type="button" onClick={onSignIn}>
+        로그인
+      </button>
+      <button type="button" onClick={onSignOut}>
+        로그아웃
+      </button>
+    </>
   );
 }
 
