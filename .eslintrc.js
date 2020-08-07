@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/indent': ['off'],
     'react/jsx-one-expression-per-line': ['off'],
-    'implicit-arrow-linebreak': ['off']
+    'implicit-arrow-linebreak': ['off'],
+    'react/require-default-props': ['off']
   },
 };

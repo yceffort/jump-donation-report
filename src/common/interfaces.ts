@@ -17,4 +17,5 @@ export interface UserInterface {
   email: string
   exp: number
   name: string
+  token: string
 }
