@@ -1,3 +1,5 @@
+export const LOGIN_COOKIE_KEY = 'LOGIN_SESSION';
+
 export interface GoogleSignInInterface {
   result: boolean,
   info?: GoogleUserInfoInterface

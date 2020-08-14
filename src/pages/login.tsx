@@ -12,7 +12,7 @@ export default function Login({
   userInfo,
 }: {
   token?: string
-  userInfo?: GoogleUserInfoInterface
+  userInfo?: GoogleUserInfoInterface | null
 }) {
   const [userState, dispatch] = useReducer(userReducer, initialState);
 
