@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CookiesProvider, useCookies } from 'react-cookie';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import Login from './pages/login';
 import UserContext from './common/user/context';
 import { initialState } from './common/user/reducer';
 import Home from './pages/home';
@@ -10,6 +9,7 @@ import Public from './pages/public';
 import getUser from './services/fetch';
 import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from './common/interfaces';
 import NotFound from './pages/not-found';
+import Header from './components/header';
 
 function App() {
   const [cookie] = useCookies();
@@ -41,12 +41,9 @@ function App() {
     <UserContext.Provider value={initialState}>
       <CookiesProvider>
         <>
+          <Header userInfo={userInfo} token={token} />
           <Router>
             <Switch>
-
-              <Route path="/login">
-                <Login token={token} userInfo={userInfo} />
-              </Route>
 
               <Route
                 path="/:year/private"
