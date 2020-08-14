@@ -1,22 +1,28 @@
 import React, { useReducer, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
+import styled from 'styled-components';
 import { userReducer, initialState, UserStatus } from '../common/user/reducer';
-import { GoogleUserInfoInterface } from '../common/interfaces';
+
+import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from '../common/interfaces';
 import getUser from '../services/fetch';
 
-const LOGIN_COOKIE = 'LOGIN_SESSION';
+const MenuHeader = styled.div`
+  height: 50px;
+  border: 1px red solid;
+`;
+
 const CLIENT_ID = '450893975309-gr4ed18b4733vapf59l35e150i927vlq.apps.googleusercontent.com';
 
-export default function Login({
-  token,
+export default function Header({
   userInfo,
-}: {
-  token?: string
-  userInfo?: GoogleUserInfoInterface | null
+  token,
+ }: {
+   userInfo?: GoogleUserInfoInterface | null
+   token?: string
 }) {
   const [userState, dispatch] = useReducer(userReducer, initialState);
 
-  const [, setCookie, removeCookie] = useCookies([LOGIN_COOKIE]);
+  const [, setCookie, removeCookie] = useCookies([LOGIN_COOKIE_KEY]);
 
   useEffect(() => {
     if (userInfo && token) {
@@ -36,7 +42,7 @@ export default function Login({
     dispatch({
       status: UserStatus.LogOut,
     });
-    removeCookie(LOGIN_COOKIE);
+    removeCookie(LOGIN_COOKIE_KEY);
     window.gapi.load('auth2', async () => {
       window.gapi.auth2.init({
         client_id: CLIENT_ID,
@@ -65,7 +71,7 @@ export default function Login({
 
       if (result && info) {
         const expDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-        setCookie(LOGIN_COOKIE, authResponse.id_token, { path: '/', expires: expDate });
+        setCookie(LOGIN_COOKIE_KEY, authResponse.id_token, { path: '/', expires: expDate });
 
         dispatch({
           status: UserStatus.Login,
@@ -91,16 +97,19 @@ export default function Login({
     await signOut();
   };
 
-  return (
+return (
+  <MenuHeader>{userState && userState.user ? (
     <>
-      <button type="button" onClick={onSignIn}>
-        로그인
-      </button>
+      {userState.user.email}
       <button type="button" onClick={onSignOut}>
         로그아웃
       </button>
-
-      {JSON.stringify(userState)}
     </>
-  );
+) : (
+  <button type="button" onClick={onSignIn}>
+    로그인
+  </button>
+)}
+  </MenuHeader>
+);
 }
