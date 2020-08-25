@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { CookiesProvider, useCookies } from 'react-cookie';
-import Login from './pages/login';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import UserContext from './common/user/context';
 import { initialState } from './common/user/reducer';
 import getUser from './services/fetch';
 import { GoogleUserInfoInterface } from './common/interfaces';
+import Login from './pages/login';
+import Main from './pages/main';
 
 const LOGIN_COOKIE = 'LOGIN_SESSION';
 function App() {
@@ -28,7 +30,12 @@ function App() {
   return (
     <UserContext.Provider value={initialState}>
       <CookiesProvider>
-        <Login token={token} userInfo={userInfo} />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact component={Main} token={token} userInfo={userInfo} />
+            <Route path="/login" component={Login} token={token} userInfo={userInfo} />
+          </Switch>
+        </BrowserRouter>
       </CookiesProvider>
     </UserContext.Provider>
   );
