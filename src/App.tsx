@@ -46,7 +46,7 @@ function App() {
               <Public />
             </Route>
 
-            <Route path="/">
+            <Route exact to path="/">
               <Home />
             </Route>
 
