@@ -13,13 +13,9 @@ import Header from './components/header';
 
 function App() {
   const [cookie] = useCookies();
-  // 각각 로그인 성공, 실패, 아직 알 수 없음.
   const [userInfo, setUserInfo] = useState<GoogleUserInfoInterface | null | undefined>();
   const [token, setToken] = useState<string | undefined>();
 
-  /*
-   * 앱 최초 시작시에 로그인 처리를 한다.
-   */
   useEffect(() => {
     (async () => {
       const authToken = cookie[LOGIN_COOKIE_KEY];
@@ -40,31 +36,26 @@ function App() {
   return (
     <UserContext.Provider value={initialState}>
       <CookiesProvider>
-        <>
-          <Header userInfo={userInfo} token={token} />
-          <Router>
-            <Switch>
+        <Header userInfo={userInfo} token={token} />
+        <Router>
+          <Switch>
 
-              <Route
-                path="/:year/private"
-                render={(props) => (<Private userInfo={userInfo} {...props} />)}
-              />
+            <Route path="/:year/private" render={(props) => (<Private userInfo={userInfo} {...props} />)} />
 
-              <Route path="/:year/public">
-                <Public />
-              </Route>
+            <Route path="/:year/public">
+              <Public />
+            </Route>
 
-              <Route exact path="/">
-                <Home />
-              </Route>
+            <Route path="/">
+              <Home />
+            </Route>
 
-              <Route path="*">
-                <NotFound />
-              </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
 
-            </Switch>
-          </Router>
-        </>
+          </Switch>
+        </Router>
       </CookiesProvider>
     </UserContext.Provider>
   );
