@@ -1,5 +1,5 @@
 module.exports = {
-  $schema: 'http://json.schemastore.org/prettierrc',
+  $schema: 'eslint-config-yceffort/prettierrc',
   useTabs: false,
   printWidth: 80,
   tabWidth: 2,
