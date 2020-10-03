@@ -1,8 +1,0 @@
-{
-  "extends": [
-    "eslint-config-yceffort/typescript",
-  ],
-  "rules": {
-    // your custom rules
-  }
-}
