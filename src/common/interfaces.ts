@@ -1,17 +1,17 @@
-export const LOGIN_COOKIE_KEY = 'LOGIN_SESSION';
+export const LOGIN_COOKIE_KEY = 'LOGIN_SESSION'
 
 export interface GoogleSignInInterface {
-  result: boolean,
+  result: boolean
   info?: GoogleUserInfoInterface
 }
 
 export interface GoogleUserInfoInterface extends UserInterface {
-  email_verified: boolean,
-  at_hash: string,
-  picture: string,
-  given_name: string,
-  locale: string,
-  iat: number,
+  email_verified: boolean
+  at_hash: string
+  picture: string
+  given_name: string
+  locale: string
+  iat: number
   jti: string
 }
 
