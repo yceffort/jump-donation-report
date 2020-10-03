@@ -1,6 +1,7 @@
-import { createContext } from 'react';
-import { UserState, initialState } from './reducer';
+import { createContext } from 'react'
 
-const UserContext = createContext<UserState>(initialState);
+import { UserState, initialState } from './reducer'
 
-export default UserContext;
+const UserContext = createContext<UserState>(initialState)
+
+export default UserContext
