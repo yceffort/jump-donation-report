@@ -1,11 +1,10 @@
 import React, { useReducer, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import styled from 'styled-components'
-
+import { Link } from 'react-router-dom'
 import { userReducer, initialState, UserStatus } from '../common/user/reducer'
 import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from '../common/interfaces'
 import getUser from '../services/fetch'
-import { Link } from 'react-router-dom';
 
 const MenuHeader = styled.div`
   height: 80px;
@@ -40,68 +39,6 @@ export default function Header({
     }
   }, [userInfo, token])
 
-  async function signOut() {
-    dispatch({
-      status: UserStatus.LogOut,
-    })
-    removeCookie(LOGIN_COOKIE_KEY)
-    window.gapi.load('auth2', async () => {
-      window.gapi.auth2.init({
-        client_id: CLIENT_ID,
-      })
-      const GoogleAuth = window.gapi.auth2.getAuthInstance()
-      await GoogleAuth.signOut()
-    })
-  }
-
-  const onSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (e) {
-      e.preventDefault()
-    }
-    window.gapi.load('auth2', async () => {
-      window.gapi.auth2.init({
-        client_id: CLIENT_ID,
-      })
-      const GoogleAuth = window.gapi.auth2.getAuthInstance()
-      const options = new window.gapi.auth2.SigninOptionsBuilder()
-      options.setPrompt('select_account')
-      options.setScope('profile').setScope('email')
-
-      const response = await GoogleAuth.signIn(options)
-      const authResponse = response.getAuthResponse()
-      const { result, info } = await getUser(authResponse.id_token)
-
-      if (result && info) {
-        const expDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-        setCookie(LOGIN_COOKIE_KEY, authResponse.id_token, {
-          path: '/',
-          expires: expDate,
-        })
-
-        dispatch({
-          status: UserStatus.Login,
-          user: {
-            email: info.email,
-            exp: info.exp,
-            name: info.name,
-            token: authResponse.id_token,
-          },
-        })
-      } else {
-        await signOut()
-      }
-    })
-  }
-
-  const onSignOut = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    if (e) {
-      e.preventDefault()
-    }
-    await signOut()
-  }
-
   return (
     <MenuHeader>
       {userState && userState.user ? (
@@ -113,7 +50,7 @@ export default function Header({
           <p>로그인해주세요.</p>
         </>
       )}
-     <Link to="/login">로그인페이지로 이동</Link>
+      <Link to="/login">로그인페이지로 이동</Link>
     </MenuHeader>
   )
 }

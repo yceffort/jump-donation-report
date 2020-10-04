@@ -10,20 +10,19 @@ import Public from './pages/public'
 import getUser from './services/fetch'
 import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from './common/interfaces'
 import NotFound from './pages/not-found'
-import Header from './components/header'
-import Login from './pages/login';
+import Login from './pages/login'
 
 function App() {
   const [cookie] = useCookies()
   const [userInfo, setUserInfo] = useState<
     GoogleUserInfoInterface | null | undefined
   >()
-  const [token, setToken] = useState<string | undefined>()
+  // const [token, setToken] = useState<string | undefined>()
 
   useEffect(() => {
     ;(async () => {
       const authToken = cookie[LOGIN_COOKIE_KEY]
-      setToken(authToken)
+      // setToken(authToken)
       if (authToken) {
         const { result, info } = await getUser(authToken)
         if (result) {
