@@ -11,6 +11,7 @@ import getUser from './services/fetch'
 import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from './common/interfaces'
 import NotFound from './pages/not-found'
 import Header from './components/header'
+import Login from './pages/login';
 
 function App() {
   const [cookie] = useCookies()
@@ -39,7 +40,6 @@ function App() {
   return (
     <UserContext.Provider value={initialState}>
       <CookiesProvider>
-        <Header userInfo={userInfo} token={token} />
         <Router>
           <Switch>
             <Route
@@ -53,6 +53,10 @@ function App() {
 
             <Route exact to path="/">
               <Home />
+            </Route>
+
+            <Route exact to path="/login">
+              <Login />
             </Route>
 
             <Route path="*">

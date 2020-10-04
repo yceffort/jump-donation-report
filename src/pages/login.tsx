@@ -1,21 +1,14 @@
 import React, { useReducer, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
-import styled from 'styled-components'
 
 import { userReducer, initialState, UserStatus } from '../common/user/reducer'
 import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from '../common/interfaces'
 import getUser from '../services/fetch'
-import { Link } from 'react-router-dom';
-
-const MenuHeader = styled.div`
-  height: 80px;
-  border: 1px red solid;
-`
 
 const CLIENT_ID =
   '450893975309-gr4ed18b4733vapf59l35e150i927vlq.apps.googleusercontent.com'
 
-export default function Header({
+export default function Login({
   userInfo,
   token,
 }: {
@@ -103,17 +96,21 @@ export default function Header({
   }
 
   return (
-    <MenuHeader>
+    <>
       {userState && userState.user ? (
         <>
-          <p>{userState.user.email}</p>
+          {userState.user.email}
+          <button type="button" onClick={onSignOut}>
+            로그아웃
+          </button>
         </>
       ) : (
         <>
-          <p>로그인해주세요.</p>
+          <button type="button" onClick={onSignIn}>
+            로그인
+          </button>
         </>
       )}
-     <Link to="/login">로그인페이지로 이동</Link>
-    </MenuHeader>
+    </>
   )
 }
