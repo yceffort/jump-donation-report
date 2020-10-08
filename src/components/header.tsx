@@ -1,18 +1,17 @@
 import React, { useReducer, useEffect } from 'react'
-import { useCookies } from 'react-cookie'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+
 import { userReducer, initialState, UserStatus } from '../common/user/reducer'
-import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from '../common/interfaces'
-import getUser from '../services/fetch'
+import { GoogleUserInfoInterface } from '../common/interfaces'
+// import getUser from '../services/fetch'
 
 const MenuHeader = styled.div`
   height: 80px;
   border: 1px red solid;
 `
 
-const CLIENT_ID =
-  '450893975309-gr4ed18b4733vapf59l35e150i927vlq.apps.googleusercontent.com'
+// const CLIENT_ID = '450893975309-gr4ed18b4733vapf59l35e150i927vlq.apps.googleusercontent.com'
 
 export default function Header({
   userInfo,
@@ -23,7 +22,7 @@ export default function Header({
 }) {
   const [userState, dispatch] = useReducer(userReducer, initialState)
 
-  const [, setCookie, removeCookie] = useCookies([LOGIN_COOKIE_KEY])
+  // const [, setCookie, removeCookie] = useCookies([LOGIN_COOKIE_KEY])
 
   useEffect(() => {
     if (userInfo && token) {

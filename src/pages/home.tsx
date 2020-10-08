@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+
 import Header from '../components/header'
 import { GoogleUserInfoInterface, LOGIN_COOKIE_KEY } from '../common/interfaces'
 import getUser from '../services/fetch'
@@ -26,7 +27,7 @@ export default function Home() {
         setUserInfo(null)
       }
     })()
-  }, [])
+  }, [cookie])
 
   return (
     <>
